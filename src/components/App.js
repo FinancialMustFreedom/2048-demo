@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import styled, { ThemeProvider } from 'styled-components';
+import PropTypes from 'prop-types';
 
 import Game from './Game';
 import github from './github.png';
@@ -106,6 +107,12 @@ const StyledH4 = styled.h4`
   margin: 0;
 `;
 
+const StyledUser = styled.h4`
+  font-size: 10px;
+  margin: 0;
+  color: gray;
+`;
+
 const TextDiv = styled.div``;
 
 const TitleContainer = styled.div`
@@ -127,7 +134,8 @@ const UnderGame = styled.div`
   align-items: center;
 `;
 
-const App = React.memo(() => {
+
+const App = React.memo(({ contract, currentUser, nearConfig, wallet }) => {
   const score = useSelector(selectPoints);
   const dispatch = useDispatch();
   const [theme, setTheme] = useState('light');
@@ -140,8 +148,24 @@ const App = React.memo(() => {
     dispatch(restartGameAction());
   };
 
+  const signIn = () => {
+    wallet.requestSignIn(
+      nearConfig.contractName,
+      'NEAR Guest Book'
+    );
+  };
+
+  const signOut = () => {
+    wallet.signOut();
+    window.location.replace(window.location.origin + window.location.pathname);
+  };
+
   return (
     <ThemeProvider theme={theme === 'light' ? lightTheme : darkTheme}>
+        { currentUser
+          ? <button onClick={signOut}>Log out</button>
+          : <button onClick={signIn}>Log in</button>
+        }
       <BodyDiv>
         <Container>
           <GlobalStyle />
@@ -153,6 +177,7 @@ const App = React.memo(() => {
               <ScoreContainer>
                 <StyledH3>SCORE</StyledH3>
                 <StyledH4>{score}</StyledH4>
+                <StyledUser>{currentUser?currentUser.accountId:"Game Visitor!"}</StyledUser>
               </ScoreContainer>
             </HeaderDiv>
             <AboveGame>
@@ -186,5 +211,23 @@ const App = React.memo(() => {
     </ThemeProvider>
   );
 });
+
+App.propTypes = {
+  contract: PropTypes.shape({
+    addMessage: PropTypes.func.isRequired,
+    getMessages: PropTypes.func.isRequired
+  }).isRequired,
+  currentUser: PropTypes.shape({
+    accountId: PropTypes.string.isRequired,
+    balance: PropTypes.string.isRequired
+  }),
+  nearConfig: PropTypes.shape({
+    contractName: PropTypes.string.isRequired
+  }).isRequired,
+  wallet: PropTypes.shape({
+    requestSignIn: PropTypes.func.isRequired,
+    signOut: PropTypes.func.isRequired
+  }).isRequired
+};
 
 export default App;
