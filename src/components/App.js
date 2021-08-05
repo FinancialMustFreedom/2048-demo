@@ -151,7 +151,7 @@ const App = React.memo(({ contract, currentUser, nearConfig, wallet }) => {
   const signIn = () => {
     wallet.requestSignIn(
       nearConfig.contractName,
-      'NEAR Guest Book'
+      'NEAR 2048'
     );
   };
 
