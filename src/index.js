@@ -27,7 +27,7 @@ async function initContract() {
 
   // Load in account data
   let currentUser;
-  if(walletConnection.getAccountId()) {
+  if (walletConnection.getAccountId()) {
     currentUser = {
       accountId: walletConnection.getAccountId(),
       balance: (await walletConnection.account().state()).amount
@@ -37,9 +37,9 @@ async function initContract() {
   // Initializing our contract APIs by contract name and configuration
   const contract = await new nearAPI.Contract(walletConnection.account(), nearConfig.contractName, {
     // View methods are read-only – they don't modify the state, but usually return some value
-    viewMethods: ['getMessages'],
+    viewMethods: ['ft_total_supply', 'ft_balance_of'],
     // Change methods can modify the state, but you don't receive the returned value when called
-    changeMethods: ['addMessage'],
+    changeMethods: ['ft_transfer'],
     // Sender is the account ID to initialize transactions.
     // getAccountId() will return empty string if user is still unauthorized
     sender: walletConnection.getAccountId()
@@ -50,20 +50,20 @@ async function initContract() {
 
 window.nearInitPromise = initContract()
   .then(({ contract, currentUser, nearConfig, walletConnection }) => {
-  window.moveLeft = moveLeft;
-  ReactDOM.render(
-    <Provider store={store}>
-      <ThemeProvider theme={DEFAULT_THEME}>
-        <PersistGate loading={null} persistor={persistor}>
-          <App
-            contract={contract}
-            currentUser={currentUser}
-            nearConfig={nearConfig}
-            wallet={walletConnection}
-          />
-        </PersistGate>
-      </ThemeProvider>
-    </Provider>,
-    document.getElementById("root")
-  );
-});
+    window.moveLeft = moveLeft;
+    ReactDOM.render(
+      <Provider store={store}>
+        <ThemeProvider theme={DEFAULT_THEME}>
+          <PersistGate loading={null} persistor={persistor}>
+            <App
+              contract={contract}
+              currentUser={currentUser}
+              nearConfig={nearConfig}
+              wallet={walletConnection}
+            />
+          </PersistGate>
+        </ThemeProvider>
+      </Provider>,
+      document.getElementById("root")
+    );
+  });

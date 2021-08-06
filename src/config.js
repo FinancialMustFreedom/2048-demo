@@ -1,7 +1,7 @@
-const CONTRACT_NAME = process.env.CONTRACT_NAME || 'wisarmy.testnet';
+const CONTRACT_NAME = process.env.CONTRACT_NAME || '2048.testnet';
 
 function getConfig(env) {
-  switch(env) {
+  switch (env) {
     case 'mainnet':
       return {
         networkId: 'mainnet',

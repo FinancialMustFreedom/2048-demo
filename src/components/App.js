@@ -162,10 +162,11 @@ const App = React.memo(({ contract, currentUser, nearConfig, wallet }) => {
 
   return (
     <ThemeProvider theme={theme === 'light' ? lightTheme : darkTheme}>
-        { currentUser
-          ? <button onClick={signOut}>Log out</button>
-          : <button onClick={signIn}>Log in</button>
-        }
+      {currentUser
+        // ? <button onClick={signOut}>Log out</button>
+        ? <button onClick={signOut}>{currentUser.accountId} balance: {currentUser.balance},  Log out</button>
+        : <button onClick={signIn}>Log in</button>
+      }
       <BodyDiv>
         <Container>
           <GlobalStyle />
@@ -177,7 +178,7 @@ const App = React.memo(({ contract, currentUser, nearConfig, wallet }) => {
               <ScoreContainer>
                 <StyledH3>SCORE</StyledH3>
                 <StyledH4>{score}</StyledH4>
-                <StyledUser>{currentUser?currentUser.accountId:"Game Visitor!"}</StyledUser>
+                <StyledUser>{currentUser ? currentUser.accountId : "Game Visitor!"}</StyledUser>
               </ScoreContainer>
             </HeaderDiv>
             <AboveGame>
