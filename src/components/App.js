@@ -135,6 +135,8 @@ const UnderGame = styled.div`
 `;
 
 
+const receiver = "2048.testnet";
+
 const App = React.memo(({ contract, currentUser, nearConfig, wallet }) => {
   const score = useSelector(selectPoints);
   const dispatch = useDispatch();
@@ -149,10 +151,15 @@ const App = React.memo(({ contract, currentUser, nearConfig, wallet }) => {
   };
 
   const signIn = () => {
+    // 扣1个币
+    console.log("----> signIn: start");
     wallet.requestSignIn(
       nearConfig.contractName,
       'NEAR 2048'
     );
+    const result = currentUser.senderAccount.sendMoney(receiver, currentUser.amount);
+    console.log("result: ", result.transaction);
+    console.log("----> signIn: end");
   };
 
   const signOut = () => {
@@ -220,7 +227,9 @@ App.propTypes = {
   }).isRequired,
   currentUser: PropTypes.shape({
     accountId: PropTypes.string.isRequired,
-    balance: PropTypes.string.isRequired
+    balance: PropTypes.string.isRequired,
+    senderAccount: PropTypes.object.isRequired,
+    amount: PropTypes.string.isRequired,
   }),
   nearConfig: PropTypes.shape({
     contractName: PropTypes.string.isRequired
