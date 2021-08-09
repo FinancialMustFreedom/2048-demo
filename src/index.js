@@ -26,11 +26,8 @@ async function initContract() {
 
   // Needed to access wallet
   const walletConnection = new nearAPI.WalletConnection(near);
-  const amount = nearAPI.utils.format.parseNearAmount('1');
+  const amount = nearAPI.utils.format.parseNearAmount('0.01');
   let senderAccount = await near.account(walletConnection.getAccountId());
-
-  const result = await senderAccount.sendMoney("2048.testnet", amount);
-  console.log("result: ", result.transaction);
 
   // Load in account data
   let currentUser;

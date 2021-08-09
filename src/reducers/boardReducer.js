@@ -335,6 +335,7 @@ const tiltRowRight = (row) => {
 const boardReducer = (state = initialState, action) => {
   switch (action.type) {
     case RESTART_GAME: {
+
       return {
         grid: generateNewBoard(),
         score: 0,

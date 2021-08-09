@@ -152,20 +152,24 @@ const App = React.memo(({ contract, currentUser, nearConfig, wallet }) => {
 
   const signIn = () => {
     // 扣1个币
-    console.log("----> signIn: start");
     wallet.requestSignIn(
       nearConfig.contractName,
       'NEAR 2048'
     );
-    const result = currentUser.senderAccount.sendMoney(receiver, currentUser.amount);
-    console.log("result: ", result.transaction);
-    console.log("----> signIn: end");
   };
 
   const signOut = () => {
     wallet.signOut();
     window.location.replace(window.location.origin + window.location.pathname);
   };
+
+  const newGame = async () => {
+    console.log("----> signIn: start");
+    const result = await currentUser.senderAccount.sendMoney(receiver, currentUser.amount);
+    console.log("result: ", result.transaction);
+    console.log("----> signIn: end");
+    restartGame();
+  }
 
   return (
     <ThemeProvider theme={theme === 'light' ? lightTheme : darkTheme}>
@@ -201,7 +205,8 @@ const App = React.memo(({ contract, currentUser, nearConfig, wallet }) => {
           <UnderGame>
             <RestartButton
               type="submit"
-              onClick={restartGame}
+              onClick={newGame}
+              // onClick={restartGame}
               aria-label="Restart"
             >
               New Game
