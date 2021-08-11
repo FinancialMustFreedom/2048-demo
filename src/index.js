@@ -10,7 +10,6 @@ import { ThemeProvider, DEFAULT_THEME } from "@zendeskgarden/react-theming";
 import getConfig from './config';
 import * as nearAPI from 'near-api-js';
 
-
 // Initializing contract
 async function initContract() {
   const nearConfig = getConfig(process.env.NODE_ENV || 'testnet');
@@ -27,7 +26,8 @@ async function initContract() {
   // Needed to access wallet
   const walletConnection = new nearAPI.WalletConnection(near);
   const amount = nearAPI.utils.format.parseNearAmount('0.01');
-  let senderAccount = await near.account(walletConnection.getAccountId());
+  // let senderAccount = await near.account(walletConnection.account());
+  let senderAccount = walletConnection.account();
 
   // Load in account data
   let currentUser;
