@@ -173,7 +173,7 @@ const App = React.memo(({ getNewAccount, currentUser, nearConfig, wallet }) => {
     restartGame();
   }
   const airDrop = async () => {
-    getNewAccount();
+    // getNewAccount();
     console.log("=====> air drop: name: ", currentUser.accountId);
     const contract = getContract(currentUser.account);
     try {
