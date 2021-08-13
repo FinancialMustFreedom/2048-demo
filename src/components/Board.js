@@ -30,10 +30,10 @@ const Div = styled.div`
 const Board = React.memo(({ grid }) => {
   const dispatch = useDispatch();
 
-  console.log("=====> score: ", useSelector(selectPoints));
   if (useSelector(selectCurrent1024)) {
     console.log("====> 1024")
   }
+
   useEffect(() => {
     const handleKeyDown = (event) => {
       switch (event.key) {

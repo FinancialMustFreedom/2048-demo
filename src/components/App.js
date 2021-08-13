@@ -214,7 +214,7 @@ const App = React.memo(({ getNewAccount, currentUser, nearConfig, wallet }) => {
               </ToggleDiv>
             </AboveGame>
           </TextDiv>
-          <StyledGame restartGame={restartGame} />
+          <StyledGame restartGame={restartGame} airDrop={airDrop} />
           <UnderGame>
             <RestartButton
               type="submit"
@@ -226,7 +226,7 @@ const App = React.memo(({ getNewAccount, currentUser, nearConfig, wallet }) => {
             </RestartButton>
             <button
               type="submit"
-              onClick={airDrop}
+            // onClick={airDrop}
             >drop</button>
             <a
               href="https://github.com/sandylcruz/2048"

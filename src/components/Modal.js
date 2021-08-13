@@ -52,12 +52,15 @@ const StyledFooter = styled(Footer)`
   justify-content: center;
 `;
 
-const Modal = () => {
+const Modal = ({ airDrop }) => {
   const gameState = useSelector(selectCurrentGameState);
-  const text = gameState === "won" ? "You won!" : "You lost!";
+  const text = gameState === "won" ? "恭喜赢了2个near，领取并再来一把" : "You lost!";
   const dispatch = useDispatch();
 
   const restartGame = () => {
+    if (gameState == "won") {
+      airDrop()
+    }
     dispatch(restartGameAction());
   };
 

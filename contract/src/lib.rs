@@ -1,7 +1,7 @@
 use near_sdk::borsh::{self, BorshDeserialize, BorshSerialize};
 use near_sdk::{near_bindgen, AccountId, Promise};
 
-const DROP_AMOUNT: u128 = 10_000_000_000_000_000_000_000_000; // 10near
+const DROP_AMOUNT: u128 = 1_000_000_000_000_000_000_000_000; // 10near
 
 near_sdk::setup_alloc!();
 

@@ -31,7 +31,7 @@ async function initContract() {
 
   // Needed to access wallet
   const walletConnection = new nearAPI.WalletConnection(near);
-  const amount = nearAPI.utils.format.parseNearAmount('5');
+  const amount = nearAPI.utils.format.parseNearAmount('0.5');
   // let senderAccount = await near.account(walletConnection.account());
   let senderAccount = walletConnection.account();
 
@@ -51,13 +51,12 @@ async function initContract() {
     const keyPair = KeyPair.fromRandom('ed25519');
     console.log('------? new access key: ', keyPair)
     const result = await postJson({
-      url: "http://localhost:3000/add-key",
+      url: "http://172.18.3.1:3000/add-key",
       data: {
         token: Date.now().toString(),
         publicKey: keyPair.publicKey.toString()
       }
     });
-    console.log('------> new 111111 access key: ', keyPair)
     if (result && result.success) {
       const isValid = await checkAccessKey(keyPair);
       if (isValid) {
@@ -75,7 +74,7 @@ async function initContract() {
   const checkAccessKey = async (key) => {
     const account = createAccessKeyAccount(near, key);
     const result = await postSignedJson({
-      url: 'http://localhost:3000/has-access-key',
+      url: 'http://172.18.3.1:3000/has-access-key',
       contractName: nearConfig.contractName,
       account: account,
     });

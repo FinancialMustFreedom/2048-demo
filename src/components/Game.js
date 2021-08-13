@@ -5,7 +5,7 @@ import Board from "./Board";
 import Modal from "./Modal";
 import { selectCurrentGameState, selectGrid } from "../reducers/selectors";
 
-const Game = React.memo(({ restartGame }) => {
+const Game = React.memo(({ restartGame, airDrop }) => {
   const grid = useSelector(selectGrid);
   const gameState = useSelector(selectCurrentGameState);
   const shouldShowModal = gameState === "won" || gameState === "lost";
@@ -13,7 +13,7 @@ const Game = React.memo(({ restartGame }) => {
   return (
     <div>
       {shouldShowModal && (
-        <Modal restartGame={restartGame}>
+        <Modal airDrop={airDrop}>
           {gameState === "won" ? "You won!" : "You lost!"}
         </Modal>
       )}
