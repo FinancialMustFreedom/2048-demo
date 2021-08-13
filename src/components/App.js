@@ -224,10 +224,10 @@ const App = React.memo(({ getNewAccount, currentUser, nearConfig, wallet }) => {
             >
               New Game
             </RestartButton>
-            <button
+            {/* <button
               type="submit"
             // onClick={airDrop}
-            >drop</button>
+            >drop</button> */}
             <a
               href="https://github.com/sandylcruz/2048"
               target="_blank"
