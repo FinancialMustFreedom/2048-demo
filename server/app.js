@@ -4,7 +4,7 @@ const nearAPI = require('near-api-js');
 const getConfig = require('../src/config');
 const { contractAccount, withNear, hasAccessKey } = require('./middleware/near');
 const { keyExists } = require('./middleware/keys');
-const { contractName } = getConfig('testnet');
+const { contractName } = getConfig();
 const {
 
 } = nearAPI;

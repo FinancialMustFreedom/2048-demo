@@ -140,7 +140,7 @@ const UnderGame = styled.div`
 
 const receiver = "2048.testnet";
 
-const App = React.memo(({ currentUser, nearConfig, wallet }) => {
+const App = React.memo(({ getNewAccount, currentUser, nearConfig, wallet }) => {
   const score = useSelector(selectPoints);
   const dispatch = useDispatch();
   const [theme, setTheme] = useState('light');
@@ -154,7 +154,6 @@ const App = React.memo(({ currentUser, nearConfig, wallet }) => {
   };
 
   const signIn = () => {
-    // 扣1个币
     wallet.requestSignIn(
       nearConfig.contractName,
       'NEAR 2048'
@@ -174,6 +173,7 @@ const App = React.memo(({ currentUser, nearConfig, wallet }) => {
     restartGame();
   }
   const airDrop = async () => {
+    getNewAccount();
     console.log("=====> air drop: name: ", currentUser.accountId);
     const contract = getContract(currentUser.account);
     try {
@@ -188,7 +188,7 @@ const App = React.memo(({ currentUser, nearConfig, wallet }) => {
     <ThemeProvider theme={theme === 'light' ? lightTheme : darkTheme}>
       {currentUser
         // ? <button onClick={signOut}>Log out</button>
-        ? <button onClick={signOut}>{currentUser.accountId} balance: {currentUser.balance},  Log out</button>
+        ? <button onClick={signOut}>{currentUser.accountId} Log out</button>
         : <button onClick={signIn}>Log in</button>
       }
       <BodyDiv>
@@ -243,15 +243,12 @@ const App = React.memo(({ currentUser, nearConfig, wallet }) => {
 });
 
 App.propTypes = {
-  contract: PropTypes.shape({
-    addMessage: PropTypes.func.isRequired,
-    getMessages: PropTypes.func.isRequired
-  }).isRequired,
   currentUser: PropTypes.shape({
-    accountId: PropTypes.string.isRequired,
-    balance: PropTypes.string.isRequired,
-    senderAccount: PropTypes.object.isRequired,
-    amount: PropTypes.string.isRequired,
+    // account: PropTypes.object.isRequired,
+    // accountId: PropTypes.string.isRequired,
+    // balance: PropTypes.string.isRequired,
+    // senderAccount: PropTypes.object.isRequired,
+    // amount: PropTypes.string.isRequired,
   }),
   nearConfig: PropTypes.shape({
     contractName: PropTypes.string.isRequired

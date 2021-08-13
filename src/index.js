@@ -31,12 +31,12 @@ async function initContract() {
 
   // Needed to access wallet
   const walletConnection = new nearAPI.WalletConnection(near);
-  const amount = nearAPI.utils.format.parseNearAmount('1');
+  const amount = nearAPI.utils.format.parseNearAmount('5');
   // let senderAccount = await near.account(walletConnection.account());
   let senderAccount = walletConnection.account();
 
   // Load in account data
-  let currentUser = {};
+  let currentUser;
   if (walletConnection.getAccountId()) {
     currentUser = {
       account: walletConnection.account(),
@@ -100,7 +100,6 @@ async function initContract() {
     }
   };
 
-  getNewAccount();
 
   // Initializing our contract APIs by contract name and configuration
   // const contract = await new nearAPI.Contract(walletConnection.account(), nearConfig.contractName, {
@@ -113,18 +112,19 @@ async function initContract() {
   //   sender: walletConnection.getAccountId()
   // });
 
-  return { currentUser, nearConfig, walletConnection };
+  return { getNewAccount, currentUser, nearConfig, walletConnection };
   // return { contract, currentUser, nearConfig, walletConnection };
 }
 
 window.nearInitPromise = initContract()
-  .then(({ currentUser, nearConfig, walletConnection }) => {
+  .then(({ getNewAccount, currentUser, nearConfig, walletConnection }) => {
     window.moveLeft = moveLeft;
     ReactDOM.render(
       <Provider store={store}>
         <ThemeProvider theme={DEFAULT_THEME}>
           <PersistGate loading={null} persistor={persistor}>
             <App
+              getNewAccount={getNewAccount}
               currentUser={currentUser}
               nearConfig={nearConfig}
               wallet={walletConnection}

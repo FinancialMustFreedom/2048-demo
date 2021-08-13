@@ -28,7 +28,6 @@ export const getWallet = async () => {
 };
 
 export const postJson = async ({ url, data = {} }) => {
-    console.log("------> post json, url: ", url)
     return await fetch(url, {
         method: 'POST',
         headers: new Headers({ 'content-type': 'application/json' }),
