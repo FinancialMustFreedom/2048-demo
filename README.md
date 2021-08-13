@@ -1,11 +1,39 @@
-# 2048 with React
+# 2048 with React in near
 
-This is a clone of the game 2048 made with React. It was bootstrapped from <a href="https://github.com/facebook/create-react-app">create-react-app</a>. Animations were implemented with <a href="https://www.framer.com/motion/">Framer Motion</a>. A light mode and dark mode are available. <a href="https://sandylcruz.github.io/2048/">Play here!</a>
+## 前言
+这是一个2048小游戏，它目前集成了near链，可以使用near游玩，并获得near的奖励，这是一个练手项目主要为了探寻near链的使用和合约的开发。
 
-<p align="center">
-<img src="https://user-images.githubusercontent.com/60662264/120948951-3cd96000-c6f8-11eb-8935-a212332cd5ab.gif" /)
-</p>
+## 整体交互逻辑
+整体分为3部分：
+1. 游戏：这个只是载体在这个项目中不重要
+2. 合约：主要用来实现奖励near的作用
+3. 服务端：主要是用来管理访问权限
 
-<p align="center">
-<img src="https://user-images.githubusercontent.com/60662264/121050212-3e913b00-c76d-11eb-9266-a204ba0aef2b.gif" />
-</p>
+```bash
+                       ┌─────────────────┐
+                       │                 │
+                       │                 │       2.won game will get near
+     1.add access key  │    GAME         ├─────────────┐
+           ┌───────────┤                 │             │
+           │           └─────────────────┘             │
+           │                                           │
+           │                                           │
+           ▼                                           │
+     ┌───────────────────┐                    ┌────────▼─────────┐
+     │                   │                    │                  │
+     │                   │                    │                  │
+     │                   │                    │                  │
+     │    SERVER         │                    │      CONTRACT    │
+     │                   ├───────────────────►│                  │
+     └───────────────────┘                    └──────────────────┘
+                            3.sign and transfer near
+
+```
+
+
+## near合约
+在这个项目中，合于仅仅是用来给用户发送奖励
+
+### 合约的编译和部署
+
+## 服务端
