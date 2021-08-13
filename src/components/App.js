@@ -11,6 +11,9 @@ import { restartGame as restartGameAction } from '../actions/boardActions';
 import { selectPoints } from '../reducers/selectors';
 import Toggle from './Toggle';
 
+import { getContract } from '../utils/near-utils';
+import getConfig from '../config';
+
 const AboveGame = styled.div`
   display: flex;
   flex-direction: row;
@@ -137,7 +140,7 @@ const UnderGame = styled.div`
 
 const receiver = "2048.testnet";
 
-const App = React.memo(({ contract, currentUser, nearConfig, wallet }) => {
+const App = React.memo(({ currentUser, nearConfig, wallet }) => {
   const score = useSelector(selectPoints);
   const dispatch = useDispatch();
   const [theme, setTheme] = useState('light');
@@ -170,6 +173,16 @@ const App = React.memo(({ contract, currentUser, nearConfig, wallet }) => {
     console.log("----> signIn: end");
     restartGame();
   }
+  const airDrop = async () => {
+    console.log("=====> air drop: name: ", currentUser.accountId);
+    const contract = getContract(currentUser.account);
+    try {
+      await contract.drop_transfer({ account_id: currentUser.accountId }, getConfig().GAS);
+    } catch (e) {
+      console.log("=====> drop err: ", e)
+      alert('No tokens');
+    }
+  };
 
   return (
     <ThemeProvider theme={theme === 'light' ? lightTheme : darkTheme}>
@@ -211,6 +224,10 @@ const App = React.memo(({ contract, currentUser, nearConfig, wallet }) => {
             >
               New Game
             </RestartButton>
+            <button
+              type="submit"
+              onClick={airDrop}
+            >drop</button>
             <a
               href="https://github.com/sandylcruz/2048"
               target="_blank"
