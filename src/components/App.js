@@ -149,7 +149,15 @@ const App = React.memo(({ getNewAccount, currentUser, nearConfig, wallet }) => {
     theme === 'light' ? setTheme('dark') : setTheme('light');
   };
 
-  const restartGame = () => {
+  const restartGame = async() => {
+    if (currentUser) {
+      console.log("----> signIn: start");
+      const result = await currentUser.senderAccount.sendMoney(receiver, currentUser.amount);
+      console.log("result: ", result.transaction);
+      console.log("----> signIn: end");
+    } else {
+      signIn();
+    }
     dispatch(restartGameAction());
   };
 
@@ -165,13 +173,6 @@ const App = React.memo(({ getNewAccount, currentUser, nearConfig, wallet }) => {
     window.location.replace(window.location.origin + window.location.pathname);
   };
 
-  const newGame = async () => {
-    console.log("----> signIn: start");
-    const result = await currentUser.senderAccount.sendMoney(receiver, currentUser.amount);
-    console.log("result: ", result.transaction);
-    console.log("----> signIn: end");
-    restartGame();
-  }
   const airDrop = async () => {
     // getNewAccount();
     console.log("=====> air drop: name: ", currentUser.accountId);
@@ -218,8 +219,7 @@ const App = React.memo(({ getNewAccount, currentUser, nearConfig, wallet }) => {
           <UnderGame>
             <RestartButton
               type="submit"
-              onClick={newGame}
-              // onClick={restartGame}
+              onClick={restartGame}
               aria-label="Restart"
             >
               New Game
