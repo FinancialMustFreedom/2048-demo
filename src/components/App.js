@@ -13,6 +13,7 @@ import Toggle from './Toggle';
 
 import { getContract } from '../utils/near-utils';
 import getConfig from '../config';
+import loadItems from '../utils/view'
 
 const AboveGame = styled.div`
   display: flex;
@@ -158,8 +159,8 @@ const App = React.memo(({ getNewAccount, currentUser, nearConfig, wallet }) => {
       nearConfig.contractName,
       'NEAR 2048'
     );
+    
   };
-
   const signOut = () => {
     wallet.signOut();
     window.location.replace(window.location.origin + window.location.pathname);
@@ -183,14 +184,18 @@ const App = React.memo(({ getNewAccount, currentUser, nearConfig, wallet }) => {
       alert('No tokens');
     }
   };
-
+  const getMyNFT = async ()=>{
+    console.log("current user",currentUser.accountId)
+    loadItems(currentUser.accountId)
+  }
   return (
     <ThemeProvider theme={theme === 'light' ? lightTheme : darkTheme}>
       {currentUser
         // ? <button onClick={signOut}>Log out</button>
-        ? <button onClick={signOut}>{currentUser.accountId} Log out</button>
-        : <button onClick={signIn}>Log in</button>
+        ? <button onClick={signOut}>{currentUser.accountId} Logout</button>
+        : <button onClick={signIn}>Login</button>
       }
+      <button onClick={getMyNFT}>MYNFT</button>
       <BodyDiv>
         <Container>
           <GlobalStyle />
