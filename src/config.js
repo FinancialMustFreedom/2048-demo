@@ -1,4 +1,4 @@
-const CONTRACT_NAME = 'dev-1628836201962-82352257839530';
+const CONTRACT_NAME = 'nft1.ok3.testnet';
 
 function getConfig() {
   return {

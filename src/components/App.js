@@ -13,7 +13,7 @@ import Toggle from './Toggle';
 
 import { getContract } from '../utils/near-utils';
 import getConfig from '../config';
-import loadItems from '../utils/view'
+import {loadItems} from '../utils/view'
 
 const AboveGame = styled.div`
   display: flex;
@@ -184,9 +184,13 @@ const App = React.memo(({ getNewAccount, currentUser, nearConfig, wallet }) => {
       alert('No tokens');
     }
   };
-  const getMyNFT = async ()=>{
-    console.log("current user",currentUser.accountId)
-    loadItems(currentUser.accountId)
+  const getMyNFT =  ()=>{
+    let tokens =loadItems(currentUser.account)
+    tokens.then((v)=>{
+      v.forEach(function(e){
+        console.log("media",e.metadata.media)
+      })
+    })
   }
   return (
     <ThemeProvider theme={theme === 'light' ? lightTheme : darkTheme}>
