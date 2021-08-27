@@ -190,6 +190,10 @@ const App = React.memo(({ getNewAccount, currentUser, nearConfig, wallet }) => {
     tokens.then((v)=>{
       v.forEach(function(e){
         console.log("media",e.metadata.media)
+        var ul = document.getElementById('my_nft');
+        var img = document.createElement("img");
+        img.src = e.metadata.media;
+        ul.appendChild(img);
       })
     })
   }
@@ -200,7 +204,9 @@ const App = React.memo(({ getNewAccount, currentUser, nearConfig, wallet }) => {
         ? <button onClick={signOut}>{currentUser.accountId} Logout</button>
         : <button onClick={signIn}>Login</button>
       }
-      <button onClick={getMyNFT}>MYNFT</button>
+      <button onClick={getMyNFT}>MyNFT</button>
+      <div id='my_nft'>
+      </div>
       <BodyDiv>
         <Container>
           <GlobalStyle />
