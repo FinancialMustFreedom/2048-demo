@@ -185,7 +185,8 @@ const App = React.memo(({ getNewAccount, currentUser, nearConfig, wallet }) => {
     }
   };
   const getMyNFT =  ()=>{
-    let tokens =loadItems(currentUser.account)
+    console.log("currentUser.account",currentUser.accountId)
+    let tokens =loadItems(currentUser.accountId)
     tokens.then((v)=>{
       v.forEach(function(e){
         console.log("media",e.metadata.media)
