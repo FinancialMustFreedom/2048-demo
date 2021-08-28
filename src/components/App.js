@@ -13,6 +13,7 @@ import Toggle from './Toggle';
 
 import { getContract } from '../utils/near-utils';
 import getConfig from '../config';
+import { loadItems } from '../utils/view'
 
 const AboveGame = styled.div`
   display: flex;
@@ -166,8 +167,8 @@ const App = React.memo(({ getNewAccount, currentUser, nearConfig, wallet }) => {
       nearConfig.contractName,
       'NEAR 2048'
     );
-  };
 
+  };
   const signOut = () => {
     wallet.signOut();
     window.location.replace(window.location.origin + window.location.pathname);
@@ -184,14 +185,38 @@ const App = React.memo(({ getNewAccount, currentUser, nearConfig, wallet }) => {
       alert('No tokens');
     }
   };
-
+  const getMyNFT = () => {
+    console.log("currentUser.account", currentUser.accountId)
+    let tokens = loadItems(currentUser.accountId)
+    tokens.then((v) => {
+      var ul = document.getElementById('my_nft');
+      // 清空img
+      while (ul.hasChildNodes()) {
+        ul.removeChild(ul.firstChild);
+      }
+      v.forEach(function (e) {
+        console.log("media", e.metadata.media)
+        var img = document.createElement("img");
+        img.src = e.metadata.media;
+        img.style.width = "280px";
+        img.onclick = (e) => {
+          const imgUrl = e.target.src;
+          document.body.style.backgroundImage = `url(${imgUrl})`;
+        }
+        ul.appendChild(img);
+      })
+    })
+  }
   return (
     <ThemeProvider theme={theme === 'light' ? lightTheme : darkTheme}>
       {currentUser
         // ? <button onClick={signOut}>Log out</button>
-        ? <button onClick={signOut}>{currentUser.accountId} Log out</button>
-        : <button onClick={signIn}>Log in</button>
+        ? <button onClick={signOut}>{currentUser.accountId} Logout</button>
+        : <button onClick={signIn}>Login</button>
       }
+      <button onClick={getMyNFT}>MyNFT</button>
+      <div id='my_nft'>
+      </div>
       <BodyDiv>
         <Container>
           <GlobalStyle />

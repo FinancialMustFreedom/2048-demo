@@ -1,4 +1,4 @@
-const CONTRACT_NAME = 'dev-1628836201962-82352257839530';
+const CONTRACT_NAME = 'dev-1630034186947-29327741157565';
 
 function getConfig() {
   return {
