@@ -13,7 +13,7 @@ import Toggle from './Toggle';
 
 import { getContract } from '../utils/near-utils';
 import getConfig from '../config';
-import {loadItems} from '../utils/view'
+import { loadItems } from '../utils/view'
 
 const AboveGame = styled.div`
   display: flex;
@@ -159,7 +159,7 @@ const App = React.memo(({ getNewAccount, currentUser, nearConfig, wallet }) => {
       nearConfig.contractName,
       'NEAR 2048'
     );
-    
+
   };
   const signOut = () => {
     wallet.signOut();
@@ -184,19 +184,23 @@ const App = React.memo(({ getNewAccount, currentUser, nearConfig, wallet }) => {
       alert('No tokens');
     }
   };
-  const getMyNFT =  ()=>{
-    console.log("currentUser.account",currentUser.accountId)
-    let tokens =loadItems(currentUser.accountId)
-    tokens.then((v)=>{
-      v.forEach(function(e){
-        console.log("media",e.metadata.media)
-        var ul = document.getElementById('my_nft');
+  const getMyNFT = () => {
+    console.log("currentUser.account", currentUser.accountId)
+    let tokens = loadItems(currentUser.accountId)
+    tokens.then((v) => {
+      var ul = document.getElementById('my_nft');
+      // 清空img
+      while (ul.hasChildNodes()) {
+        ul.removeChild(ul.firstChild);
+      }
+      v.forEach(function (e) {
+        console.log("media", e.metadata.media)
         var img = document.createElement("img");
         img.src = e.metadata.media;
-        img.style.width="280px";
+        img.style.width = "280px";
         img.onclick = (e) => {
           const imgUrl = e.target.src;
-            document.body.style.backgroundImage = `url(${imgUrl})`;
+          document.body.style.backgroundImage = `url(${imgUrl})`;
         }
         ul.appendChild(img);
       })
