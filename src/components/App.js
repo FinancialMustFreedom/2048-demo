@@ -193,6 +193,11 @@ const App = React.memo(({ getNewAccount, currentUser, nearConfig, wallet }) => {
         var ul = document.getElementById('my_nft');
         var img = document.createElement("img");
         img.src = e.metadata.media;
+        img.style.width="280px";
+        img.onclick = (e) => {
+          const imgUrl = e.target.src;
+            document.body.style.backgroundImage = `url(${imgUrl})`;
+        }
         ul.appendChild(img);
       })
     })
