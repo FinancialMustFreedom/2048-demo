@@ -54,7 +54,7 @@ const StyledFooter = styled(Footer)`
 
 const Modal = ({ airDrop }) => {
   const gameState = useSelector(selectCurrentGameState);
-  const text = gameState === "won" ? "恭喜赢了2个near，领取并再来一把" : "You lost!";
+  const text = gameState === "won" ? "恭喜赢了1个near，领取并再来一把" : "You lost!";
   const dispatch = useDispatch();
 
   const restartGame = () => {

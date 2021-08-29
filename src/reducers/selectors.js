@@ -35,7 +35,7 @@ export const selectCurrentGameState = createSelector(
   (state) => state.board.grid,
   (grid) => {
     const isWon = grid.some((row) => {
-      return row.some((tile) => tile.value === 512);
+      return row.some((tile) => tile.value === 128);
       // return row.some((tile) => tile.value === 2048);
     });
 
