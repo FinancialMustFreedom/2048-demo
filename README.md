@@ -15,7 +15,6 @@
 整体分为3部分：
 1. 游戏：这个只是载体在这个项目中不重要
 2. 合约：主要用来实现奖励near的作用
-3. 服务端：主要是用来管理访问权限
 
 ```bash
                        ┌─────────────────┐
@@ -40,8 +39,19 @@
 
 
 ## near合约
-在这个项目中，合于仅仅是用来给用户发送奖励
+在这个项目中,一部分用来给用户发放奖励，另一部分可以从nft项目中拉起自己的图片当游戏背景
+主要代码
+```rust
+#[near_bindgen]
+impl Drop {
+    pub fn drop_transfer(&mut self, account_id: AccountId) {
+        Promise::new(account_id).transfer(DROP_AMOUNT);
+    }
+}
+```
 
 ### 合约的编译和部署
+```bash
+yarn && yarn start
+```
 
-## 服务端
